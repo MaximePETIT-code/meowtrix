@@ -48,10 +48,10 @@ export default function SideNav() {
       <ContactList />
 
       <Divider sx={{ mt: 'auto' }} />
-      <List>
+      <List disablePadding>
         {BOTTOM_LINKS.map(({ text, icon: Icon, isLogoutLink }) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton onClick={isLogoutLink ? () => signOut() : undefined}>
+            <ListItemButton onClick={isLogoutLink ? () => signOut() : undefined} sx={{padding: '20px 16px'}}>
               <ListItemIcon>
                 <Icon />
               </ListItemIcon>
