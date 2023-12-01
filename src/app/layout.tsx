@@ -19,7 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const session = await getServerSession(options)
 
   if (!session) {
-    redirect('/api/auth/signin?callbackUrl=/server')
+    redirect('/api/auth/signin')
   }
 
   return (
