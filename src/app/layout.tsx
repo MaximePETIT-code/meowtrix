@@ -8,8 +8,8 @@ import AuthProvider from './context/AuthProvider'
 import SideNav from '@/components/SideNav/SideNav';
 
 export const metadata = {
-  title: 'Next.js App Router + Material UI v5',
-  description: 'Next.js App Router + Material UI v5',
+  title: 'Meowtrix - Chat web app',
+  description: 'Meotrix is a chat web app',
 };
 
 const DRAWER_WIDTH = 430;
