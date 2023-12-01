@@ -19,6 +19,10 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SupportIcon from '@mui/icons-material/Support';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
+import { getServerSession } from 'next-auth';
+import { options } from './api/auth/[...nextauth]/options';
+import { redirect } from 'next/navigation';
+import AuthProvider from './context/AuthProvider'
 
 export const metadata = {
   title: 'Next.js App Router + Material UI v5',
@@ -39,11 +43,19 @@ const PLACEHOLDER_LINKS = [
   { text: 'Logout', icon: LogoutIcon },
 ];
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+
+  const session = await getServerSession(options)
+
+    if (!session) {
+        redirect('/api/auth/signin?callbackUrl=/server')
+    }
+
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>
+        <AuthProvider>
+          <ThemeRegistry>
           <AppBar position="fixed" sx={{ zIndex: 2000 }}>
             <Toolbar sx={{ backgroundColor: 'background.paper' }}>
               <DashboardIcon sx={{ color: '#444', mr: 2, transform: 'translateY(-2px)' }} />
@@ -106,7 +118,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             {children}
           </Box>
-        </ThemeRegistry>
+          </ThemeRegistry>
+        </AuthProvider>
       </body>
     </html>
   );
