@@ -12,6 +12,12 @@ import SendIcon from '@mui/icons-material/Send';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ContactList from '@/components/SideNav/ContactList';
 import { signOut } from 'next-auth/react';
+import { User } from '@prisma/client';
+import UserList from '../UserList/UserList';
+
+interface SideNavProps {
+  users: User[];
+}
 
 const DRAWER_WIDTH = 430;
 
@@ -19,7 +25,11 @@ const BOTTOM_LINKS = [
   { text: 'Logout', icon: LogoutIcon, isLogoutLink: true },
 ];
 
-export default function SideNav() {
+export const SideNav: React.FC<SideNavProps> = ({ users }) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Drawer
       sx={{
@@ -40,12 +50,15 @@ export default function SideNav() {
         size="large"
         startIcon={<SendIcon />}
         disableElevation
+        onClick={handleOpen}
         sx={{ width: '100%', borderRadius: 0, height: '100px' }}
       >
         New message
       </Button>
 
       <ContactList />
+
+      <UserList users={users} open={open} handleClose={handleClose}/>
 
       <Divider sx={{ mt: 'auto' }} />
       <List disablePadding>

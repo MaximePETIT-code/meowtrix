@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { Box } from "@mui/material";
-import SideNav from "@/components/SideNav/SideNav";
+import { SideNav } from '@/components/SideNav/SideNav';
+import getUsers from '../actions/getUsers';
 
 const DRAWER_WIDTH = 430;
 
@@ -17,23 +18,23 @@ export default async function ConversationsLayout({
     redirect('/')
   }
 
+  const users = await getUsers();
+
   return (
-    <html lang="en">
-      <body>
-            <SideNav/>
-            <Box
-              component="main"
-              sx={{
-                flexGrow: 1,
-                bgcolor: 'background.default',
-                ml: `${DRAWER_WIDTH}px`,
-                mt: ['0', '0', '0'],
-                p: 3,
-              }}
-            >
-              {children}
-            </Box>
-      </body>
-    </html>
+    <>
+      <SideNav users={users} />
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          bgcolor: 'background.default',
+          ml: `${DRAWER_WIDTH}px`,
+          mt: ['0', '0', '0'],
+          p: 3,
+        }}
+      >
+        {children}
+      </Box>
+    </>
   );
 }
