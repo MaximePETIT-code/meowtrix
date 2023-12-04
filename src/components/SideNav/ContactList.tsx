@@ -6,11 +6,10 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { ListItemAvatar } from '@mui/material';
 import { usePathname } from 'next/navigation';
-
+import Avatar from '../Avatar/Avatar';
 
 export default function ContactList() {
   const currentRoute = usePathname();
@@ -46,7 +45,7 @@ export default function ContactList() {
             disablePadding>
             < ListItemButton >
               <ListItemAvatar>
-                <Avatar {...stringAvatar(contact.name)} />
+                <Avatar name={contact.name}/>
               </ListItemAvatar>
               <ListItemText
                 primary={contact.name}
@@ -69,28 +68,4 @@ export default function ContactList() {
       }
     </List >
   );
-}
-
-
-// generate color based on name
-function stringToColor(string: string) {
-  let hash = 0;
-  for (let i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  const hue = hash % 360;
-  const lightness = 75;
-
-  return `hsl(${hue}, 50%, ${lightness}%)`;
-}
-
-// display only the first letter of the name
-function stringAvatar(name: string) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: name[0],
-  };
 }
