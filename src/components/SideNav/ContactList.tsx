@@ -38,11 +38,11 @@ export default function ContactList() {
       {contacts.map((contact, index) => (
         <Link
           key={index}
-          href={`/conversation/${contact.id}`} 
+          href={`/conversations/${contact.id}`} 
           style={{ textDecoration: "none", color: "inherit" }}>
           <ListItem
             alignItems="flex-start"
-            sx={{ background: currentRoute === `/conversation/${contact.id}` ? theme => theme.palette.grey[100] : 'inherit' }}
+            sx={{ background: currentRoute === `/conversations/${contact.id}` ? theme => theme.palette.grey[100] : 'inherit' }}
             disablePadding>
             < ListItemButton >
               <ListItemAvatar>
