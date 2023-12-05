@@ -51,6 +51,7 @@ const UserList: React.FC<UserListProps> = ({
                         <UserItem
                             key={item.id}
                             data={item}
+                            handleClose={handleClose}
                         />
                     ))}
                 </List>

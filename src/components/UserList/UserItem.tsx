@@ -1,18 +1,26 @@
-"use client"
 import React, { useState } from 'react';
+import axios from 'axios';
 import Avatar from '../Avatar/Avatar';
 import Typography from '@mui/material/Typography';
 import { User } from '@prisma/client';
 import { ListItemButton } from '@mui/material';
+import { useRouter } from 'next/navigation'; 
 
 interface UserBoxProps {
     data: User;
+    handleClose: () => void;
 }
 
-const UserItem: React.FC<UserBoxProps> = ({ data }) => {
+const UserItem: React.FC<UserBoxProps> = ({ data, handleClose }) => {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleConversationStart = async () => {
+        console.log('start conversation')
+    };
 
     return (
-        <ListItemButton sx={{
+        <ListItemButton onClick={() => handleConversationStart()} sx={{
             width: '100%',
             position: 'relative',
             display: 'flex',
