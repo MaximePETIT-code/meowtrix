@@ -4,7 +4,7 @@ import Avatar from '../Avatar/Avatar';
 import Typography from '@mui/material/Typography';
 import { User } from '@prisma/client';
 import { ListItemButton } from '@mui/material';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 
 interface UserBoxProps {
     data: User;
@@ -16,7 +16,12 @@ const UserItem: React.FC<UserBoxProps> = ({ data, handleClose }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleConversationStart = async () => {
-        console.log('start conversation')
+        axios.post('/api/conversations', { userId: data.id })
+            .then((data) => {
+                router.push(`/conversations/${data.data.id}`);
+            }).finally(() => {
+                handleClose();
+            })
     };
 
     return (

@@ -27,10 +27,8 @@ export default async function ConversationsLayout({
         component="main"
         sx={{
           flexGrow: 1,
-          bgcolor: 'background.default',
           ml: `${DRAWER_WIDTH}px`,
           mt: ['0', '0', '0'],
-          p: 3,
         }}
       >
         {children}
