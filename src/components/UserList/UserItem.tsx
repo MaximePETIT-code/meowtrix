@@ -42,7 +42,7 @@ const UserItem: React.FC<UserBoxProps> = ({ data, handleClose }) => {
                 marginBottom: '14px',
             }
         }}>
-            {data.name && <Avatar name={data.name} />}
+            {data.name && <Avatar name={data.name} img={data.image} />}
             <div style={{ minWidth: 0, flex: 1 }}>
                 <div>
                     <span style={{ position: 'absolute', inset: 0 }} aria-hidden="true" />

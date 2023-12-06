@@ -6,13 +6,16 @@ import { TextField, InputAdornment } from "@mui/material";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputProps {
-  label: string;
+  label?: string;
   id: string;
   type?: string;
   required?: boolean;
+  placeholder?: string;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   disabled?: boolean;
+  variant?: 'standard' | 'outlined' | 'filled';
+  sx?: object;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -20,37 +23,32 @@ const Input: React.FC<InputProps> = ({
   id,
   register,
   required,
+  placeholder,
   errors,
   type = "text",
   disabled,
+  variant="standard",
+  sx
 }) => {
   return (
-    <div>
-      {/* <label
-        htmlFor={id}
-        className="block text-sm font-medium leading-6 text-gray-900"
-      >
-        {label}
-      </label> */}
-      <div className="mt-2">
-        <TextField
-          id={id}
-          type={type}
-          autoComplete={id}
-          disabled={disabled}
-          {...register(id, { required })}
-          variant="outlined"
-          label={label}
-          fullWidth
-          error={!!errors[id]}
-          className={clsx(
-            errors[id] && "focus:ring-rose-500",
-            disabled && "opacity-50 cursor-default"
-          )}
-          sx={{marginBottom: '24px'}}
-        />
-      </div>
-    </div>
+    <TextField
+      id={id}
+      type={type}
+      autoComplete={id}
+      disabled={disabled}
+      {...register(id, { required })}
+      variant={variant}
+      label={label}
+      placeholder={placeholder}
+      fullWidth
+      error={!!errors[id]}
+      className={clsx(
+        errors[id] && "focus:ring-rose-500",
+        disabled && "opacity-50 cursor-default"
+      )}
+      sx={{ marginBottom: '24px', ...sx }}
+    />
+
   );
 };
 

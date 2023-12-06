@@ -116,6 +116,7 @@ const AuthForm = () => {
               disabled={isLoading}
               register={register}
               errors={errors}
+              variant='outlined'
               required
               id="name"
               label="Name"
@@ -125,6 +126,7 @@ const AuthForm = () => {
             disabled={isLoading}
             register={register}
             errors={errors}
+            variant='outlined'
             required
             id="email"
             label="Email address"
@@ -134,6 +136,7 @@ const AuthForm = () => {
             disabled={isLoading}
             register={register}
             errors={errors}
+            variant='outlined'
             required
             id="password"
             label="Password"
