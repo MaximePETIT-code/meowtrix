@@ -12,16 +12,18 @@ const Body = () => {
   }, []);
 
   return (
-    <div ref={messageContainerRef}>
-      <Message />
-      <Message isOwn />
-      <Message />
-      <Message isOwn />
-      <Message />
-      <Message isOwn />
-      <Message />
-      <Message isOwn />
-      <Message />
+    <div style={{ height: '100vh', overflowY: 'auto', marginTop: '100px', marginBottom: '70px' }}>
+      <div ref={messageContainerRef}>
+        <Message />
+        <Message isOwn />
+        <Message />
+        <Message isOwn />
+        <Message />
+        <Message isOwn />
+        <Message />
+        <Message isOwn />
+        <Message />
+      </div>
     </div>
   );
 };

@@ -18,7 +18,7 @@ const ChatId = async ({ params }: { params: IParams }) => {
   }
 
   return (
-    <Box sx={{ height: '100vh', overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', position: 'relative', maxHeight: '100vh' }}>
       <Header conversation={conversation} />
       <Body />
       <Form />

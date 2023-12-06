@@ -12,9 +12,9 @@ const Form = () => {
       alignItems: 'center',
       gap: '8px',
       borderRadius: 0,
-      position: 'sticky',
+      position: 'fixed',
       bottom: '0',
-      width: '100%',
+      width: 'calc(100% - 430px)',
       height: '73px',
     }}>
       <Input placeholder="Write a message" fullWidth />

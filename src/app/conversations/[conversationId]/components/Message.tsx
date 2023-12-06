@@ -12,7 +12,7 @@ const Message: React.FC<MessageProps> = ({ isOwn }) => {
   return (
     <Box
       elevation={0}
-      style={{
+      sx={{
         display: 'flex',
         padding: '20px',
         flexDirection: isOwn ? 'row-reverse' : 'row',
