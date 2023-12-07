@@ -45,7 +45,7 @@ export default function ContactList() {
             disablePadding>
             < ListItemButton >
               <ListItemAvatar>
-                <Avatar name={contact.name}/>
+                <Avatar name={contact.name} img={null}/>
               </ListItemAvatar>
               <ListItemText
                 primary={contact.name}
