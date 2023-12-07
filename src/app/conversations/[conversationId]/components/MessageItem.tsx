@@ -30,14 +30,14 @@ const MessageItem: React.FC<MessageItemProps> = ({ data }) => {
       }}
     >
       <div>
-        {data.sender && data.sender.name && <Avatar name={data.sender.name} img={data.sender.image} />}
+        {data.sender?.name && <Avatar name={data.sender.name} img={data.sender.image} />}
 
       </div>
       <div style={{ flex: 1, marginLeft: isOwn ? '8px' : '0', marginRight: isOwn ? '0' : '8px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: isOwn ? 'flex-end' : 'flex-start' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginTop: '10px' }}>
             <Typography variant="body2" style={{ color: '#616161' }}>
-              {data.sender && data.sender.name}
+              {data.sender?.name}
             </Typography>
             <Typography variant="caption" style={{ color: '#9e9e9e', fontSize: '11px' }}>
               {format(new Date(data.createdAt), 'p')}
