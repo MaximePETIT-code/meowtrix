@@ -11,7 +11,6 @@ const Body: React.FC<BodyProps> = ({ messages = [] }) => {
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log('scroll bottom')
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollIntoView({ block: "end" });
     }

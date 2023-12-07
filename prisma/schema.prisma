@@ -18,7 +18,6 @@ model User {
   image           String?
   hashedPassword  String?
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
 
   conversationIds String[] @db.ObjectId
 
@@ -52,7 +51,6 @@ model Conversation {
   users User[] @relation(fields: [userIds], references: [id])
   lastMessage String?
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
   messagesIds String[] @db.ObjectId
   messages Message[]
 }
