@@ -1,40 +1,41 @@
 "use client"
 import React from 'react';
-import { useRouter, useParams } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { IconButton, Box } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@/components/Input/Input';
-// import useConversation from '@/app/utils/useConversation';
+import useConversation from '@/app/utils/useConversation';
 
 const Form = () => {
-  // const { conversationId } = useConversation();
-  const params = useParams();
-  const router = useRouter();
+  const { conversationId } = useConversation();
 
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors },
+    setValue,
+    formState: {
+      errors,
+    }
   } = useForm<FieldValues>({
     defaultValues: {
-      message: '',
-    },
+      message: ''
+    }
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    axios
-      .post('/api/messages', {
-        ...data,
-        conversationId: params ? params.conversationId : null,
-      })
-      .finally(() => {
-        reset();
-        router.refresh();
-      });
-  };
+    setValue('message', '', { shouldValidate: true });
+    axios.post('/api/messages', {
+      ...data,
+      conversationId: conversationId
+    })
+  }
+
+  const handleUpload = (result: any) => {
+    axios.post('/api/messages', {
+      conversationId: conversationId
+    })
+  }
 
   return (
     <form
