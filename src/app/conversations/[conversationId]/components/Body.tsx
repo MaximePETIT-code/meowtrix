@@ -6,9 +6,10 @@ import { Message } from "@prisma/client";
 import useConversation from "@/app/utils/useConversation";
 import { find } from "lodash";
 import axios from "axios";
+import { FullMessageType } from "@/app/types";
 
 interface BodyProps {
-  initialMessages: Message[];
+  initialMessages: FullMessageType[];
 }
 
 const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {

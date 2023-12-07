@@ -1,15 +1,16 @@
 "use client"
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { IconButton, Box } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@/components/Input/Input';
-import useConversation from '@/app/utils/useConversation';
+// import useConversation from '@/app/utils/useConversation';
 
 const Form = () => {
-  const { conversationId } = useConversation();
+  // const { conversationId } = useConversation();
+  const params = useParams();
   const router = useRouter();
 
   const {
@@ -27,7 +28,7 @@ const Form = () => {
     axios
       .post('/api/messages', {
         ...data,
-        conversationId: conversationId,
+        conversationId: params ? params.conversationId : null,
       })
       .finally(() => {
         reset();
