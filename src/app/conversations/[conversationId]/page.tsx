@@ -22,7 +22,7 @@ const ChatId = async ({ params }: { params: IParams }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', position: 'relative', maxHeight: '100vh' }}>
       <Header conversation={conversation} />
-      <Body messages={messages} />
+      <Body initialMessages={messages} />
       <Form />
     </Box>
   );
