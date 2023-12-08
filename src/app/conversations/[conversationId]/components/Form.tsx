@@ -2,7 +2,7 @@
 import React from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
-import { IconButton, Box } from '@mui/material';
+import { IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@/components/Input/Input';
 import useConversation from '@/app/utils/useConversation';

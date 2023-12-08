@@ -34,7 +34,7 @@ const authOptions: AuthOptions = {
           }
         });
 
-        if (!user || !user?.hashedPassword) {
+        if (!user?.hashedPassword) {
           throw new Error('Invalid credentials');
         }
 

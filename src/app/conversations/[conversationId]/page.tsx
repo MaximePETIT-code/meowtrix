@@ -1,4 +1,4 @@
-import { Container, Typography, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import getConversationById from "@/app/actions/getConversationById";
 import getMessages from '@/app/actions/getMessages';
 import Header from "./components/Header";

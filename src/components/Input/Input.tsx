@@ -2,7 +2,7 @@
 
 import React from "react";
 import clsx from "clsx";
-import { TextField, InputAdornment } from "@mui/material";
+import { TextField } from "@mui/material";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputProps {
