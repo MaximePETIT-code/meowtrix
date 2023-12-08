@@ -66,15 +66,15 @@ const ContactItem: React.FC<ConversationBoxProps> = ({
         }}
         disablePadding
       >
-        <ListItemButton sx={{py: '15px'}}>
+        <ListItemButton sx={{ py: '15px' }}>
           <ListItemAvatar>
             {otherUser.name && <Avatar name={otherUser.name} img={otherUser.image} />}
           </ListItemAvatar>
           <div style={{ width: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <div>{otherUser.name}</div>
-              <div style={{ color: '#616161', fontSize: '12px' }}>{
-                format(new Date(lastMessage.createdAt), 'p')}
+              <div style={{ color: '#616161', fontSize: '12px' }}>
+                {lastMessage?.createdAt && format(new Date(lastMessage.createdAt), 'p')}
               </div>
             </div>
 
