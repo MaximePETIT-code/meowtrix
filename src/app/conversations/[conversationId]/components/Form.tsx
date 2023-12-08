@@ -1,14 +1,15 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
-import { IconButton, Box } from '@mui/material';
+import { IconButton, Box, CircularProgress } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@/components/Input/Input';
 import useConversation from '@/app/utils/useConversation';
 
 const Form = () => {
   const { conversationId } = useConversation();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -23,18 +24,24 @@ const Form = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setValue('message', '', { shouldValidate: true });
-    axios.post('/api/messages', {
-      ...data,
-      conversationId: conversationId
-    })
-  }
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setLoading(true);
 
-  const handleUpload = (result: any) => {
-    axios.post('/api/messages', {
-      conversationId: conversationId
-    })
+    try {
+      // Simuler une pause pour montrer le chargement
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      await axios.post('/api/messages', {
+        ...data,
+        conversationId: conversationId
+      });
+
+      setValue('message', '', { shouldValidate: true });
+    } catch (error) {
+      console.error('Error sending message:', error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -63,7 +70,11 @@ const Form = () => {
         sx={{ width: '100%', marginBottom: '16px', }}
       />
       <IconButton type="submit" color="primary" aria-label="send" style={{ backgroundColor: '#673ab7' }}>
-        <SendIcon style={{ color: '#fff', width: '20px', height: '20px' }} />
+        {loading ? (
+          <CircularProgress style={{ color: '#fff', width: '20px', height: '20px' }} />
+        ) : (
+          <SendIcon style={{ color: '#fff', width: '20px', height: '20px' }} />
+        )}
       </IconButton>
     </form>
   );
