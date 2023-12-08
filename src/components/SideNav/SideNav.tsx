@@ -10,11 +10,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SendIcon from '@mui/icons-material/Send';
 import LogoutIcon from '@mui/icons-material/Logout';
-import ContactList from '@/components/SideNav/ContactList';
+import ConversationList from './ContactList';
 import { signOut } from 'next-auth/react';
 import { User } from '@prisma/client';
 import UserList from '../UserList/UserList';
 import Avatar from '../Avatar/Avatar';
+import { FullConversationType } from '@/app/types';
 
 interface SideNavProps {
   users: User[];
@@ -28,8 +29,8 @@ interface SideNavProps {
     hashedPassword: string | null;
     conversationIds: string[];
     seenMessageIds: string[];
-  } | null
-
+  } | null;
+  initialItems: FullConversationType[];
 }
 
 const DRAWER_WIDTH = 430;
@@ -38,7 +39,7 @@ const BOTTOM_LINKS = [
   { text: 'Logout', icon: LogoutIcon, isLogoutLink: true },
 ];
 
-export const SideNav: React.FC<SideNavProps> = ({ users, currentUser }) => {
+export const SideNav: React.FC<SideNavProps> = ({ users, currentUser, initialItems }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -69,7 +70,7 @@ export const SideNav: React.FC<SideNavProps> = ({ users, currentUser }) => {
         New message
       </Button>
 
-      <ContactList />
+      <ConversationList users={users} initialItems={initialItems} />
 
       <UserList users={users} open={open} handleClose={handleClose} />
 

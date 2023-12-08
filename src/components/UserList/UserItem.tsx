@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import Avatar from '../Avatar/Avatar';
 import Typography from '@mui/material/Typography';
 import { User } from '@prisma/client';
 import { ListItemButton } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 interface UserBoxProps {
     data: User;
@@ -15,14 +16,18 @@ const UserItem: React.FC<UserBoxProps> = ({ data, handleClose }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleConversationStart = async () => {
+    const handleConversationStart = useCallback(() => {
+        setIsLoading(true);
+    
         axios.post('/api/conversations', { userId: data.id })
-            .then((data) => {
-                router.push(`/conversations/${data.data.id}`);
-            }).finally(() => {
-                handleClose();
-            })
-    };
+        .then((data) => {
+          router.push(`/conversations/${data.data.id}`);
+        })
+        .finally(() => {
+            setIsLoading(false)
+            handleClose();
+        });
+      }, [data, router]);
 
     return (
         <ListItemButton onClick={() => handleConversationStart()} sx={{

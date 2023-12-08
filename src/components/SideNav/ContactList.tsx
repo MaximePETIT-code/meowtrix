@@ -1,71 +1,87 @@
-"use client"
-import * as React from 'react';
-import Link from 'next/link';
+'use client';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import Typography from '@mui/material/Typography';
-import { ListItemAvatar } from '@mui/material';
-import { usePathname } from 'next/navigation';
-import Avatar from '../Avatar/Avatar';
+import { User } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect, useMemo, useState } from "react";
+import { find } from 'lodash';
+import { pusherClient } from "@/libs/pusher";
+import ContactItem from "./ContactItem";
+import { FullConversationType } from "@/app/types";
 
-export default function ContactList() {
-  const currentRoute = usePathname();
+interface ConversationListProps {
+  initialItems: FullConversationType[];
+  users: User[];
+  title?: string;
+}
 
-  const contacts = [
-    {
-      id: 0,
-      name: 'Brunch this weekend?',
-      preview: "Ali Connors — I'll be in your neighborhood doing errands this…",
-    },
-    {
-      id: '1',
-      name: 'Summer BBQ',
-      preview: "to Scott, Alex, Jennifer — Wish I could come, but I'm out of town this…",
-    },
-    {
-      id: '2',
-      name: 'Oui Oui',
-      preview: 'Sandra Adams — Do you have Paris recommendations? Have you ever…',
-    },
-  ];
+const ConversationList: React.FC<ConversationListProps> = ({
+  initialItems,
+  users
+}) => {
+  const [items, setItems] = useState(initialItems);
+
+  const router = useRouter();
+  const session = useSession();
+
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email
+  }, [session.data?.user?.email])
+
+  useEffect(() => {
+
+    if (!pusherKey) {
+      return;
+    }
+
+    pusherClient.subscribe(pusherKey);
+
+    const updateHandler = (conversation: FullConversationType) => {
+      console.log('Received conversation:update event:', conversation);
+
+      setItems((current) => current.map((currentConversation) => {
+        if (currentConversation.id === conversation.id) {
+          return {
+            ...currentConversation,
+            messages: conversation.messages
+          };
+        }
+
+        return currentConversation;
+      }));
+    }
+
+    const newHandler = (conversation: FullConversationType) => {
+      setItems((current) => {
+        if (find(current, { id: conversation.id })) {
+          return current;
+        }
+
+        return [conversation, ...current]
+      });
+    }
+
+    const removeHandler = (conversation: FullConversationType) => {
+      setItems((current) => {
+        return [...current.filter((convo) => convo.id !== conversation.id)]
+      });
+    }
+
+    pusherClient.bind('conversation:update', updateHandler)
+    pusherClient.bind('conversation:new', newHandler)
+    pusherClient.bind('conversation:remove', removeHandler)
+  }, [pusherKey, router]);
 
   return (
     <List sx={{ width: '100%' }} disablePadding>
-      {contacts.map((contact, index) => (
-        <Link
-          key={index}
-          href={`/conversations/${contact.id}`} 
-          style={{ textDecoration: "none", color: "inherit" }}>
-          <ListItem
-            alignItems="flex-start"
-            sx={{ background: currentRoute === `/conversations/${contact.id}` ? theme => theme.palette.grey[100] : 'inherit' }}
-            disablePadding>
-            < ListItemButton >
-              <ListItemAvatar>
-                <Avatar name={contact.name} img={null}/>
-              </ListItemAvatar>
-              <ListItemText
-                primary={contact.name}
-                secondary={
-                  <Typography
-                    sx={{ display: 'inline' }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    {contact.preview}
-                  </Typography>
-                }
-              />
-            </ListItemButton>
-          </ListItem>
-          {index < contacts.length - 1 && <Divider sx={{ ml: 0 }} variant="inset" component="li" />}
-        </Link >
-      ))
-      }
-    </List >
+      {items.map((item) => (
+        <ContactItem
+          key={item.id}
+          data={item}
+        />
+      ))}
+    </List>
   );
 }
+
+export default ConversationList;

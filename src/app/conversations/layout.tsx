@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { SideNav } from '@/components/SideNav/SideNav';
 import getUsers from '../actions/getUsers';
 import getCurrentUser from '../actions/getCurrentUser';
+import getConversations from '../actions/getConversations';
 
 const DRAWER_WIDTH = 430;
 
@@ -21,10 +22,12 @@ export default async function ConversationsLayout({
 
   const users = await getUsers();
   const currentUser = await getCurrentUser();
+  const conversations = await getConversations();
+
 
   return (
     <>
-      <SideNav users={users} currentUser={currentUser} />
+      <SideNav users={users} currentUser={currentUser} initialItems={conversations} />
       <Box
         component="main"
         sx={{
