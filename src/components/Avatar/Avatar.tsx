@@ -15,7 +15,7 @@ function stringAvatar(name: string) {
 
 const Avatar: React.FC<AvatarProps> = ({ name, img, sx }) => {
     if (img) {
-        return <MaterialUIAvatar src={img} />
+        return <MaterialUIAvatar sx={{...sx}} src={img} />
     }
 
     return <MaterialUIAvatar sx={{textTransform: 'uppercase', ...sx}} {...stringAvatar(name)} />;
