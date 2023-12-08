@@ -5,7 +5,6 @@ import { SideNav } from '@/components/SideNav/SideNav';
 import getUsers from '../actions/getUsers';
 import getCurrentUser from '../actions/getCurrentUser';
 import getConversations from '../actions/getConversations';
-import { Onboarding } from './[conversationId]/components/Onboarding';
 
 const DRAWER_WIDTH = 430;
 
@@ -36,12 +35,7 @@ export default async function ConversationsLayout({
           mt: ['0', '0', '0'],
         }}
       >
-        {
-          conversations.length === 0 ? (
-            <Onboarding users={users} children={children}/>
-          ) :
-            children
-        }
+        { children }
       </Box>
     </>
   );
