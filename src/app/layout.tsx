@@ -1,48 +1,28 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
-import { getServerSession } from 'next-auth';
-import { options } from './api/auth/[...nextauth]/options';
-import { redirect } from 'next/navigation';
-import AuthProvider from './context/AuthProvider'
-import SideNav from '@/components/SideNav/SideNav';
+import AuthContext from "./context/AuthContext";
+import ToasterContext from "./context/ToasterContext";
+import ThemeRegistry from "../components/ThemeRegistry/ThemeRegistry";
 
 export const metadata = {
   title: 'Meowtrix - Chat web app',
   description: 'Meotrix is a chat web app',
 };
 
-const DRAWER_WIDTH = 430;
-
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-
-  const session = await getServerSession(options)
-
-  if (!session) {
-    redirect('/api/auth/signin')
-  }
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
 
   return (
     <html lang="en">
-      <body>
-        <AuthProvider>
+      <body >
+        <AuthContext>
           <ThemeRegistry>
-            <SideNav/>
-            <Box
-              component="main"
-              sx={{
-                flexGrow: 1,
-                bgcolor: 'background.default',
-                ml: `${DRAWER_WIDTH}px`,
-                mt: ['0', '0', '0'],
-                p: 3,
-              }}
-            >
-              {children}
-            </Box>
+            <ToasterContext />
+            {children}
           </ThemeRegistry>
-        </AuthProvider>
+        </AuthContext>
       </body>
     </html>
-  );
+  )
 }

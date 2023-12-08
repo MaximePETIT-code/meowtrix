@@ -1,28 +1,46 @@
-'use client'
+"use client"
+import React from "react";
+import { Container, Typography, Box, CssBaseline } from "@mui/material";
+import Image from "next/image";
+import AuthForm from "../components/Auth/AuthForm";
 
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2';
-import Drawer from '@mui/material/Drawer';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import MediaCard from '@/components/MediaCard';
-import { redirect } from 'next/navigation';
-import { useSession} from 'next-auth/react';
-
-export default function HomePage() {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-        redirect(`/api/auth/signin?callbackUrl=/${window.location.pathname}`)
-    }
-})
+const Auth = () => {
   return (
-    <Box sx={{ display: 'flex' }}>
-      you are connected
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        py: 12,
+        backgroundColor: "#f3f4f6",
+      }}
+    >
+      <CssBaseline />
+      <Container component="main" maxWidth="md">
+        <Box sx={{ textAlign: "center", mb: 3 }}>
+          <Image
+            height={48}
+            width={48}
+            className="mx-auto w-auto"
+            src="/images/logo.png"
+            alt="Logo"
+          />
+          <Typography
+            component="h2"
+            variant="h3"
+            fontWeight="bold"
+            mt={1}
+            mb={2}
+          >
+            Sign in to your account
+          </Typography>
+        </Box>
+        <AuthForm />
+      </Container>
     </Box>
   );
-}
+};
+
+export default Auth;

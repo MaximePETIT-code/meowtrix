@@ -4,8 +4,29 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import NextAppDirEmotionCacheProvider from './EmotionCache';
 import theme from './theme';
+import { createTheme } from '@mui/material/styles';
 
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        light: '#9575cd',
+        main: '#673ab7',
+        dark: '#512da8',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: '#b39ddb',
+        main: '#512da8',
+        dark: '#311b92',
+        contrastText: '#fff',
+      },
+    },
+  });
+  
+  
+
   return (
     <NextAppDirEmotionCacheProvider options={{ key: 'mui' }}>
       <ThemeProvider theme={theme}>
