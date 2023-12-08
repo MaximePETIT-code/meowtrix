@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { Box } from "@mui/material";
 import { SideNav } from '@/components/SideNav/SideNav';
 import getUsers from '../actions/getUsers';
+import getCurrentUser from '../actions/getCurrentUser';
 
 const DRAWER_WIDTH = 430;
 
@@ -19,10 +20,11 @@ export default async function ConversationsLayout({
   }
 
   const users = await getUsers();
+  const currentUser = await getCurrentUser();
 
   return (
     <>
-      <SideNav users={users} />
+      <SideNav users={users} currentUser={currentUser} />
       <Box
         component="main"
         sx={{

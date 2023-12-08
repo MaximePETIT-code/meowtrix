@@ -14,9 +14,22 @@ import ContactList from '@/components/SideNav/ContactList';
 import { signOut } from 'next-auth/react';
 import { User } from '@prisma/client';
 import UserList from '../UserList/UserList';
+import Avatar from '../Avatar/Avatar';
 
 interface SideNavProps {
   users: User[];
+  currentUser: {
+    createdAt: string;
+    emailVerified: string | null;
+    id: string;
+    name: string | null;
+    email: string | null;
+    image: string | null;
+    hashedPassword: string | null;
+    conversationIds: string[];
+    seenMessageIds: string[];
+  } | null
+
 }
 
 const DRAWER_WIDTH = 430;
@@ -25,7 +38,7 @@ const BOTTOM_LINKS = [
   { text: 'Logout', icon: LogoutIcon, isLogoutLink: true },
 ];
 
-export const SideNav: React.FC<SideNavProps> = ({ users }) => {
+export const SideNav: React.FC<SideNavProps> = ({ users, currentUser }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,17 +71,25 @@ export const SideNav: React.FC<SideNavProps> = ({ users }) => {
 
       <ContactList />
 
-      <UserList users={users} open={open} handleClose={handleClose}/>
+      <UserList users={users} open={open} handleClose={handleClose} />
 
       <Divider sx={{ mt: 'auto' }} />
       <List disablePadding>
         {BOTTOM_LINKS.map(({ text, icon: Icon, isLogoutLink }) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton onClick={isLogoutLink ? () => signOut() : undefined} sx={{padding: '20px 16px'}}>
+            <ListItemButton onClick={isLogoutLink ? () => signOut() : undefined} sx={{ padding: '20px 16px' }}>
               <ListItemIcon>
                 <Icon />
               </ListItemIcon>
               <ListItemText primary={text} />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {currentUser && currentUser.name &&
+                  <>
+                    <Avatar name={currentUser.name} img={currentUser.image} sx={{ width: '24px', height: '24px', fontSize: '14px' }} />
+                    <div style={{ color: '#616161', fontSize: '14px' }}>{currentUser.name}</div>
+                  </>
+                }
+              </div>
             </ListItemButton>
           </ListItem>
         ))}

@@ -50,7 +50,8 @@ const Form = () => {
         position: 'fixed',
         bottom: '0',
         width: 'calc(100% - 430px)',
-        height: '73px',
+        height: '86px',
+        backgroundColor: '#fff',
       }}
     >
       <Input
@@ -59,7 +60,7 @@ const Form = () => {
         errors={errors}
         required
         placeholder="Write a message"
-        sx={{ width: '100%', marginBottom: '16px' }}
+        sx={{ width: '100%', marginBottom: '16px', }}
       />
       <IconButton type="submit" color="primary" aria-label="send" style={{ backgroundColor: '#673ab7' }}>
         <SendIcon style={{ color: '#fff', width: '20px', height: '20px' }} />

@@ -60,7 +60,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
   }, [conversationId]);
 
   return (
-    <div style={{ height: '100vh', overflowY: 'auto', marginTop: '100px', marginBottom: '70px' }}>
+    <div style={{ height: '100vh', overflowY: 'auto', marginTop: '100px', marginBottom: '86px' }}>
       <div ref={messageContainerRef}>
         {messages.map((message) => (
           <MessageItem key={message.id} data={message} />
