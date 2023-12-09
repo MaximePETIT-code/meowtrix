@@ -5,6 +5,7 @@ import { SideNav } from '@/components/SideNav/SideNav';
 import getUsers from '../actions/getUsers';
 import getCurrentUser from '../actions/getCurrentUser';
 import getConversations from '../actions/getConversations';
+import { MessageProvider } from '../context/MessageContext';
 
 const DRAWER_WIDTH = 430;
 
@@ -25,7 +26,7 @@ export default async function ConversationsLayout({
   const conversations = await getConversations();
 
   return (
-    <>
+    <MessageProvider>
       <SideNav users={users} currentUser={currentUser} initialItems={conversations} />
       <Box
         component="main"
@@ -35,8 +36,8 @@ export default async function ConversationsLayout({
           mt: ['0', '0', '0'],
         }}
       >
-        { children }
+        {children}
       </Box>
-    </>
+    </MessageProvider>
   );
 }

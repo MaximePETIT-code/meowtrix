@@ -7,10 +7,14 @@ import SendIcon from '@mui/icons-material/Send';
 import Input from '@/components/Input/Input';
 import useConversation from '@/app/utils/useConversation';
 import toast from 'react-hot-toast';
+import { useMessageContext } from '@/app/context/MessageContext';
+import { useSession } from 'next-auth/react';
 
 const Form = () => {
   const { conversationId } = useConversation();
   const [loading, setLoading] = useState(false);
+  const { setSendingMessages } = useMessageContext();
+  const session = useSession();
 
   const {
     register,
@@ -25,14 +29,35 @@ const Form = () => {
     }
   });
 
+  console.log(session)
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
     try {
+      setSendingMessages((prevMessages) => [
+        ...(prevMessages || []),
+        {
+          id: Date.now(),
+          name: session.data?.user?.name || '',
+          body: data.message,
+          image: session.data?.user?.image || null,
+          createdAt: Date.now()
+        },
+      ]);
+
       await axios.post('/api/messages', {
         ...data,
         conversationId: conversationId
       });
+
       setValue('message', '', { shouldValidate: true });
+
+      setSendingMessages((prevMessages) => {
+        if (!prevMessages) {
+          return null;
+        }
+        return prevMessages.filter((message) => message.body !== data.message);
+      });
+
     } catch (error) {
       console.error('Error sending message:', error);
       toast.error('Error sending message');

@@ -6,6 +6,7 @@ import { Message } from "@prisma/client";
 import useConversation from "@/app/utils/useConversation";
 import { find } from "lodash";
 import axios from "axios";
+import { useMessageContext } from "@/app/context/MessageContext";
 
 interface BodyProps {
   initialMessages: Message[];
@@ -14,7 +15,7 @@ interface BodyProps {
 const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState(initialMessages);
-
+  const { sendingMessages } = useMessageContext();
 
   const { conversationId } = useConversation();
 
@@ -22,7 +23,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollIntoView({ block: "end" });
     }
-  }, [messages]);
+  }, [sendingMessages]);
 
   useEffect(() => {
     pusherClient.subscribe(conversationId)
@@ -43,11 +44,11 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
         if (currentMessage.id === newMessage.id) {
           return newMessage;
         }
-  
+
         return currentMessage;
       }))
     };
-  
+
 
     pusherClient.bind('messages:new', messageHandler)
     pusherClient.bind('message:update', updateMessageHandler);
@@ -64,6 +65,9 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
       <div ref={messageContainerRef}>
         {messages.map((message) => (
           <MessageItem key={message.id} data={message} />
+        ))}
+        {sendingMessages && sendingMessages.map((messageInProgress) => (
+          <MessageItem key={messageInProgress.id} dataInProgress={messageInProgress} />
         ))}
       </div>
     </div>
