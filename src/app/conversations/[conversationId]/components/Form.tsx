@@ -6,6 +6,7 @@ import { IconButton, Box, CircularProgress } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@/components/Input/Input';
 import useConversation from '@/app/utils/useConversation';
+import toast from 'react-hot-toast';
 
 const Form = () => {
   const { conversationId } = useConversation();
@@ -26,19 +27,15 @@ const Form = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-
     try {
-      // Simuler une pause pour montrer le chargement
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
       await axios.post('/api/messages', {
         ...data,
         conversationId: conversationId
       });
-
       setValue('message', '', { shouldValidate: true });
     } catch (error) {
       console.error('Error sending message:', error);
+      toast.error('Error sending message');
     } finally {
       setLoading(false);
     }
