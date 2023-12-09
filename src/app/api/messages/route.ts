@@ -12,7 +12,6 @@ export async function POST(
     const body = await request.json();
     const {
       message,
-      image,
       conversationId
     } = body;
 
@@ -27,7 +26,6 @@ export async function POST(
       },
       data: {
         body: message,
-        image: image,
         conversation: {
           connect: { id: conversationId }
         },
