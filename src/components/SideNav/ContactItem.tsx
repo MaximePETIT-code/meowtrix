@@ -54,6 +54,9 @@ const ContactItem: React.FC<ConversationBoxProps> = ({
     return 'Started a conversation';
   }, [lastMessage]);
 
+  if(!otherUser){
+    return null;
+  }
   return (
     <Link
       href={`/conversations/${data.id}`}
