@@ -1,8 +1,10 @@
-"use client"
+"use client";
+
 import React from "react";
 import { Container, Typography, Box, CssBaseline } from "@mui/material";
 import Image from "next/image";
 import AuthForm from "../components/Auth/AuthForm";
+import MatrixRain from "../components/Meowtrix/MatrixRain";
 
 const Auth = () => {
   return (
@@ -17,6 +19,8 @@ const Auth = () => {
         backgroundColor: "#f3f4f6",
       }}
     >
+      <MatrixRain />
+
       <CssBaseline />
       <Container component="main" maxWidth="md">
         <Box sx={{ textAlign: "center", mb: 3 }}>
@@ -34,7 +38,7 @@ const Auth = () => {
             mt={1}
             mb={2}
           >
-            Sign in to your account
+            Enter the Meowtrix.
           </Typography>
         </Box>
         <AuthForm />
