@@ -1,13 +1,13 @@
 'use client';
 
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { ListItem, ListItemAvatar, ListItemButton, Divider } from "@mui/material";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import useOtherUser from "@/app/utils/useOtherUser";
 import { FullConversationType } from "@/app/types";
-import Link from "next/link";
 import Avatar from "../Avatar/Avatar";
 
 interface ConversationBoxProps {
@@ -18,6 +18,7 @@ interface ConversationBoxProps {
 const ContactItem: React.FC<ConversationBoxProps> = ({
   data,
 }) => {
+  const router = useRouter();
   const otherUser = useOtherUser(data);
   const session = useSession();
   const currentRoute = usePathname();
@@ -54,15 +55,18 @@ const ContactItem: React.FC<ConversationBoxProps> = ({
     return 'Started a conversation';
   }, [lastMessage]);
 
-  if(!otherUser){
+  const handleClick = useCallback(() => {
+    router.push(`/conversations/${data.id}`);
+    router.refresh();
+  }, [data, router]);
+
+  if (!otherUser) {
     return null;
   }
   return (
-    <Link
-      href={`/conversations/${data.id}`}
-      style={{ textDecoration: "none", color: "inherit", }}
-    >
+    <>
       <ListItem
+        onClick={handleClick}
         alignItems="flex-start"
         sx={{
           background: currentRoute === `/conversations/${data.id}` ? theme => theme.palette.grey[100] : 'inherit',
@@ -110,7 +114,8 @@ const ContactItem: React.FC<ConversationBoxProps> = ({
         </ListItemButton>
       </ListItem>
       <Divider sx={{ ml: 0 }} variant="inset" component="li" />
-    </Link>
+    </>
+    // </Link>
   );
 }
 
