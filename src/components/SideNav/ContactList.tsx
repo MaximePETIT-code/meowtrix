@@ -37,8 +37,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
     pusherClient.subscribe(pusherKey);
 
     const updateHandler = (conversation: FullConversationType) => {
-      console.log('Received conversation:update event:', conversation);
-
       setItems((current) => current.map((currentConversation) => {
         if (currentConversation.id === conversation.id) {
           return {

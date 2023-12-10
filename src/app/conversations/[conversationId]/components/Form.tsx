@@ -28,7 +28,6 @@ const Form = () => {
     }
   });
 
-  console.log(session)
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setValue('message', '', { shouldValidate: true });
     try {
