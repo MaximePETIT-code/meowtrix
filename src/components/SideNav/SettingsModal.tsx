@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { signOut } from 'next-auth/react';
 import axios from "axios";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { Modal, Typography, Box, Button } from "@mui/material";
+import { Modal, Box, Button } from "@mui/material";
 import Input from "../Input/Input";
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -66,7 +66,7 @@ const SettingsModal: React.FC<UserListProps> = ({
     }
 
     const style = {
-        position: 'absolute' as 'absolute',
+        position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
