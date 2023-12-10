@@ -38,7 +38,7 @@ const Auth = () => {
             mt={1}
             mb={2}
           >
-            Enter the Meowtrix.
+            Enter the Meowtrix.🐱‍👤
           </Typography>
         </Box>
         <AuthForm />

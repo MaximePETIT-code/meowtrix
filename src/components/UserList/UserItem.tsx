@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import { User } from '@prisma/client';
 import { ListItemButton } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast';
 
 interface UserBoxProps {
     data: User;
