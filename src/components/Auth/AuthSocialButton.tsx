@@ -5,7 +5,7 @@ import { IconType } from "react-icons";
 
 interface AuthSocialButtonProps {
   icon: IconType;
-  title: String;
+  title: string;
   onClick: () => void;
 }
 

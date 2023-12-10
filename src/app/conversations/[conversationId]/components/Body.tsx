@@ -66,7 +66,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
         {messages.map((message) => (
           <MessageItem key={message.id} data={message} />
         ))}
-        {sendingMessages && sendingMessages.map((messageInProgress) => (
+        {sendingMessages?.map((messageInProgress) => (
           <MessageItem key={messageInProgress.id} dataInProgress={messageInProgress} />
         ))}
       </div>

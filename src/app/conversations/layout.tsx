@@ -11,9 +11,9 @@ const DRAWER_WIDTH = 430;
 
 export default async function ConversationsLayout({
   children
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
 
   const session = await getServerSession()
 

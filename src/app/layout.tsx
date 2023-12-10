@@ -3,19 +3,18 @@ import ToasterContext from "./context/ToasterContext";
 import ThemeRegistry from "../components/ThemeRegistry/ThemeRegistry";
 
 export const metadata = {
-  title: 'Meowtrix - Chat web app',
-  description: 'Meotrix is a chat web app',
+  title: "Meowtrix - Purr-fect Chat Experience",
+  description: "Enter the Meowtrix and experience the purr of conversations!",
 };
 
 export default async function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
-
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body >
+      <body>
         <AuthContext>
           <ThemeRegistry>
             <ToasterContext />
@@ -24,5 +23,5 @@ export default async function RootLayout({
         </AuthContext>
       </body>
     </html>
-  )
+  );
 }
