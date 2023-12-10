@@ -17,8 +17,6 @@ import { User } from '@prisma/client';
 import UserList from '../UserList/UserList';
 import Avatar from '../Avatar/Avatar';
 import { FullConversationType } from '@/app/types';
-import { useCallback } from 'react';
-import axios from 'axios';
 import SettingsModal from './SettingsModal';
 
 interface SideNavProps {
@@ -96,7 +94,7 @@ export const SideNav: React.FC<SideNavProps> = ({ users, currentUser, initialIte
               {
                 isSettings && (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    {currentUser && currentUser.name &&
+                    {currentUser?.name &&
                       <>
                         <Avatar name={currentUser.name} img={currentUser.image} sx={{ width: '24px', height: '24px', fontSize: '14px' }} />
                         <div style={{ color: '#616161', fontSize: '14px' }}>{currentUser.name}</div>
