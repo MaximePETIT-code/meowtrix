@@ -11,7 +11,7 @@ interface IParams {
 
 const ChatId = async ({ params }: { params: IParams }) => {
   const conversation = await getConversationById(params);
-  const messages = await getMessages(params);
+  const messages = await getMessages(params.conversationId);
 
   if (!conversation) {
     return (
@@ -22,7 +22,7 @@ const ChatId = async ({ params }: { params: IParams }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', position: 'relative', maxHeight: '100vh' }}>
       <Header conversation={conversation} />
-      <Body messages={messages} />
+      <Body initialMessages={messages} />
       <Form />
     </Box>
   );

@@ -24,7 +24,6 @@ const getCurrentUser = cache(async () => {
     return {
       ...currentUser,
       createdAt: currentUser.createdAt.toISOString(),
-      emailVerified: currentUser.emailVerified?.toISOString() || null
     };
   } catch (error: any) {
     return null;

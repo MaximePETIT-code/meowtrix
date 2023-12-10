@@ -3,14 +3,17 @@ import { getServerSession } from 'next-auth';
 import { Box } from "@mui/material";
 import { SideNav } from '@/components/SideNav/SideNav';
 import getUsers from '../actions/getUsers';
+import getCurrentUser from '../actions/getCurrentUser';
+import getConversations from '../actions/getConversations';
+import { MessageProvider } from '../context/MessageContext';
 
 const DRAWER_WIDTH = 430;
 
 export default async function ConversationsLayout({
   children
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
 
   const session = await getServerSession()
 
@@ -19,10 +22,12 @@ export default async function ConversationsLayout({
   }
 
   const users = await getUsers();
+  const currentUser = await getCurrentUser();
+  const conversations = await getConversations();
 
   return (
-    <>
-      <SideNav users={users} />
+    <MessageProvider>
+      <SideNav users={users} currentUser={currentUser} initialItems={conversations} />
       <Box
         component="main"
         sx={{
@@ -33,6 +38,6 @@ export default async function ConversationsLayout({
       >
         {children}
       </Box>
-    </>
+    </MessageProvider>
   );
 }

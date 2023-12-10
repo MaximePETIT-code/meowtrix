@@ -1,38 +1,64 @@
 "use client"
 import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import axios from 'axios';
-import { IconButton, Box } from '@mui/material';
+import { IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Input from '@/components/Input/Input';
+import useConversation from '@/app/utils/useConversation';
+import toast from 'react-hot-toast';
+import { useMessageContext } from '@/app/context/MessageContext';
+import { useSession } from 'next-auth/react';
 
 const Form = () => {
-  const params = useParams();
-  const router = useRouter();
+  const { conversationId } = useConversation();
+  const { setSendingMessages } = useMessageContext();
+  const session = useSession();
 
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors },
+    setValue,
+    formState: {
+      errors,
+    }
   } = useForm<FieldValues>({
     defaultValues: {
-      message: '',
-    },
+      message: ''
+    }
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    axios
-      .post('/api/messages', {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setValue('message', '', { shouldValidate: true });
+    try {
+      setSendingMessages((prevMessages) => [
+        ...(prevMessages || []),
+        {
+          id: Date.now(),
+          name: session.data?.user?.name || '',
+          body: data.message,
+          image: session.data?.user?.image || null,
+          createdAt: Date.now()
+        },
+      ]);
+
+      await axios.post('/api/messages', {
         ...data,
-        conversationId: params.conversationId,
-      })
-      .finally(() => {
-        reset();
-        router.refresh();
+        conversationId: conversationId
       });
-  };
+
+      setSendingMessages((prevMessages) => {
+        if (!prevMessages) {
+          return null;
+        }
+        return prevMessages.filter((message) => message.body !== data.message);
+      });
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error('Error sending message');
+    }
+  }
 
   return (
     <form
@@ -47,7 +73,8 @@ const Form = () => {
         position: 'fixed',
         bottom: '0',
         width: 'calc(100% - 430px)',
-        height: '73px',
+        height: '86px',
+        backgroundColor: '#fff',
       }}
     >
       <Input
@@ -56,7 +83,7 @@ const Form = () => {
         errors={errors}
         required
         placeholder="Write a message"
-        sx={{ width: '100%', marginBottom: '16px' }}
+        sx={{ width: '100%', marginBottom: '16px', }}
       />
       <IconButton type="submit" color="primary" aria-label="send" style={{ backgroundColor: '#673ab7' }}>
         <SendIcon style={{ color: '#fff', width: '20px', height: '20px' }} />

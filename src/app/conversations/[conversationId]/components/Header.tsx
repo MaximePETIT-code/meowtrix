@@ -1,7 +1,6 @@
 'use client';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import { format } from 'date-fns';
 import { Box } from '@mui/material';
 import Avatar from "@/components/Avatar/Avatar";
 import { Conversation, User } from "@prisma/client";
@@ -16,8 +15,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUser = useOtherUser(conversation);
 
-  const formattedDate = formatDistanceToNow(new Date(otherUser.createdAt), { addSuffix: true });
-  const registrationDate = format(new Date(otherUser.createdAt), 'MMMM yyyy');
+  const formattedDate = otherUser && formatDistanceToNow(new Date(otherUser.createdAt), { addSuffix: true });
+
   return (
     <Box sx={{
       position: 'fixed',
@@ -35,10 +34,19 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
       borderBottom: '1px solid #e0e0e0'
     }}>
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-        {otherUser.name && <Avatar name={otherUser.name} img={otherUser.image} />}
+        {otherUser ?
+          otherUser.name && <Avatar name={otherUser.name} img={otherUser.image} />
+          : <Avatar name={'?'} img={null} />}
         <div>
-          <div style={{fontSize: '18px'}}>{otherUser.name}</div>
-          <div style={{ color: '#616161', fontSize: '12px' }}>Active since {formattedDate}</div>
+          <div style={{ fontSize: '18px' }}>{otherUser ? otherUser.name : 'This user has been deleted'}</div>
+          {otherUser &&
+            <div style={{
+              color: '#616161',
+              fontSize: '12px'
+            }}>
+              Active since {formattedDate}
+            </div>
+          }
         </div>
       </div>
     </Box>
