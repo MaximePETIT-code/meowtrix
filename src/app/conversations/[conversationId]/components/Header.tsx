@@ -1,7 +1,6 @@
 'use client';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import { format } from 'date-fns';
 import { Box } from '@mui/material';
 import Avatar from "@/components/Avatar/Avatar";
 import { Conversation, User } from "@prisma/client";
@@ -17,7 +16,6 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUser = useOtherUser(conversation);
 
   const formattedDate = otherUser && formatDistanceToNow(new Date(otherUser.createdAt), { addSuffix: true });
-  const registrationDate = otherUser && format(new Date(otherUser.createdAt), 'MMMM yyyy');
 
   return (
     <Box sx={{
