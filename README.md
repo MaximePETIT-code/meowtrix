@@ -78,6 +78,23 @@ Here are some utility functions using Prisma for fetching data:
 | `getUsers`                           | Fetches a list of users, excluding the current user. Orders by creation timestamp. Used for user listing. |
 
 
+## Interface Design Screenshots
+
+| Sign in                                                                                       | Register                                                                                      |
+|------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| ![Sign in](https://github.com/Thanh-0dev/meowtrix/assets/74910872/ef52e157-2a84-4c67-a3ae-c55c7551a2da) | ![Register](https://github.com/Thanh-0dev/meowtrix/assets/74910872/3f1b9622-c19e-4738-8d5a-6e0d2c97aeb8) |
+
+
+| User list                                                                                       | User settings                                                                                    |
+|------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| ![User list](https://github.com/Thanh-0dev/meowtrix/assets/74910872/9d1acc69-6747-49c4-811b-52dd639f70d2) | ![User settings](https://github.com/Thanh-0dev/meowtrix/assets/74910872/8d5bfc37-2afe-4e0c-b4f0-9ecff28a40ab) |
+
+
+| Conversation                                                                                      |
+|------------------------------------------------------------------------------------------------------|
+| ![Conversation ](https://github.com/Thanh-0dev/meowtrix/assets/74910872/1de5256a-fff9-409d-aab6-d4688c1515dd) |
+
+
 ## Deployment on Vercel
 
 Meowtrix is deployed on Vercel for seamless hosting and continuous integration.
