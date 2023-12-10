@@ -23,7 +23,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollIntoView({ block: "end" });
     }
-  }, [sendingMessages]);
+  }, [sendingMessages, messages]);
 
   useEffect(() => {
     pusherClient.subscribe(conversationId)
