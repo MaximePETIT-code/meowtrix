@@ -95,6 +95,16 @@ Here are some utility functions using Prisma for fetching data:
 | ![Conversation ](https://github.com/Thanh-0dev/meowtrix/assets/74910872/1de5256a-fff9-409d-aab6-d4688c1515dd) |
 
 
+## Planning recap
+
+![Planning recap](https://github.com/Thanh-0dev/meowtrix/assets/72603795/b00abf01-e435-4575-ad72-f733e7919f27)
+
+
+## Work distribution
+
+![Work distribution](https://github.com/Thanh-0dev/meowtrix/assets/72603795/b896f824-0ca0-41e2-bfb1-9d190e07cb6f)
+
+
 ## Deployment on Vercel
 
 Meowtrix is deployed on Vercel for seamless hosting and continuous integration.
